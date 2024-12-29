@@ -1,4 +1,7 @@
 
+using Microsoft.EntityFrameworkCore;
+using money_management_service.Data;
+
 namespace money_management_service
 {
     public class Program
@@ -6,6 +9,10 @@ namespace money_management_service
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+
+            builder.Services.AddDbContext<MoneyManagementDBContext>(options =>
+                options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
+            );
 
             // Add services to the container.
 
