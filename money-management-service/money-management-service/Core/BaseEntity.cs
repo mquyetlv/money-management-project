@@ -11,6 +11,8 @@ namespace money_management_service.Core
         public DateTime UpdatedDate { get; set; }
 
         public Status Status { get; set; }
+
+        public string CreatedBy { get; set; }
     }
 
     public class BaseEntity : BaseEntity<int> { }
