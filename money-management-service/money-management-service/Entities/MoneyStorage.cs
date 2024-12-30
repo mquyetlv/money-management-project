@@ -14,7 +14,7 @@ namespace money_management_service.Entities
         public string CardNumber { get; set; }
 
         public string OwnerName { get; set; }
-
+        
         public CardType CardType { get; set; }
 
         public List<Transaction> Transactions { get; set; }

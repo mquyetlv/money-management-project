@@ -10,6 +10,8 @@ namespace money_management_service.Data
         public DbSet<TransactionType> TransactionTypes { get; set; }
         public DbSet<MoneyStorage> MoneyStorages { get; set; }
         public DbSet<Transaction> Transactions { get; set; }
+        public DbSet<InvestmentPortfolio> InvestmentPortfolioes { get; set; }
+        public DbSet<InvestmentHistory> InvestmentHistories { get; set; }
 
         public MoneyManagementDBContext(DbContextOptions<MoneyManagementDBContext> options) : base(options) { }
 

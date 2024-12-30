@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using money_management_service.Data;
 
@@ -11,9 +12,11 @@ using money_management_service.Data;
 namespace money_management_service.Migrations
 {
     [DbContext(typeof(MoneyManagementDBContext))]
-    partial class MoneyManagementDBContextModelSnapshot : ModelSnapshot
+    [Migration("20241230154241_add-investment")]
+    partial class addinvestment
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -57,76 +60,6 @@ namespace money_management_service.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("ExpenseType");
-                });
-
-            modelBuilder.Entity("money_management_service.Entities.InvestmentHistory", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("CreatedBy")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("InvestmentPortfolioId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
-
-                    b.Property<int>("TransactionId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("UpdatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("InvestmentPortfolioId");
-
-                    b.HasIndex("TransactionId")
-                        .IsUnique();
-
-                    b.ToTable("InvestmentHistory");
-                });
-
-            modelBuilder.Entity("money_management_service.Entities.InvestmentPortfolio", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("CreatedBy")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<long>("CurrentPrice")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("UpdatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("InvestmentPortfolio");
                 });
 
             modelBuilder.Entity("money_management_service.Entities.MoneyStorage", b =>
@@ -259,25 +192,6 @@ namespace money_management_service.Migrations
                     b.ToTable("TransactionType");
                 });
 
-            modelBuilder.Entity("money_management_service.Entities.InvestmentHistory", b =>
-                {
-                    b.HasOne("money_management_service.Entities.InvestmentPortfolio", "InvestmentPortfolio")
-                        .WithMany("InvestmentHistories")
-                        .HasForeignKey("InvestmentPortfolioId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("money_management_service.Entities.Transaction", "Transaciton")
-                        .WithOne("InvestmentHistory")
-                        .HasForeignKey("money_management_service.Entities.InvestmentHistory", "TransactionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("InvestmentPortfolio");
-
-                    b.Navigation("Transaciton");
-                });
-
             modelBuilder.Entity("money_management_service.Entities.Transaction", b =>
                 {
                     b.HasOne("money_management_service.Entities.MoneyStorage", "MoneyStorage")
@@ -313,20 +227,9 @@ namespace money_management_service.Migrations
                     b.Navigation("TransactionTypes");
                 });
 
-            modelBuilder.Entity("money_management_service.Entities.InvestmentPortfolio", b =>
-                {
-                    b.Navigation("InvestmentHistories");
-                });
-
             modelBuilder.Entity("money_management_service.Entities.MoneyStorage", b =>
                 {
                     b.Navigation("Transactions");
-                });
-
-            modelBuilder.Entity("money_management_service.Entities.Transaction", b =>
-                {
-                    b.Navigation("InvestmentHistory")
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("money_management_service.Entities.TransactionType", b =>

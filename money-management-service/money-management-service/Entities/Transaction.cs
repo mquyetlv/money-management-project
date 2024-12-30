@@ -20,5 +20,7 @@ namespace money_management_service.Entities
 
         [ForeignKey("MoneyStorageId")]
         public MoneyStorage MoneyStorage { get; set; }
+
+        public InvestmentHistory InvestmentHistory { get; set; }
     }
 }

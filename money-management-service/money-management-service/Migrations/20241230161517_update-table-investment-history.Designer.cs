@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using money_management_service.Data;
 
@@ -11,9 +12,11 @@ using money_management_service.Data;
 namespace money_management_service.Migrations
 {
     [DbContext(typeof(MoneyManagementDBContext))]
-    partial class MoneyManagementDBContextModelSnapshot : ModelSnapshot
+    [Migration("20241230161517_update-table-investment-history")]
+    partial class updatetableinvestmenthistory
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -90,8 +93,7 @@ namespace money_management_service.Migrations
 
                     b.HasIndex("InvestmentPortfolioId");
 
-                    b.HasIndex("TransactionId")
-                        .IsUnique();
+                    b.HasIndex("TransactionId");
 
                     b.ToTable("InvestmentHistory");
                 });
@@ -268,8 +270,8 @@ namespace money_management_service.Migrations
                         .IsRequired();
 
                     b.HasOne("money_management_service.Entities.Transaction", "Transaciton")
-                        .WithOne("InvestmentHistory")
-                        .HasForeignKey("money_management_service.Entities.InvestmentHistory", "TransactionId")
+                        .WithMany()
+                        .HasForeignKey("TransactionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -321,12 +323,6 @@ namespace money_management_service.Migrations
             modelBuilder.Entity("money_management_service.Entities.MoneyStorage", b =>
                 {
                     b.Navigation("Transactions");
-                });
-
-            modelBuilder.Entity("money_management_service.Entities.Transaction", b =>
-                {
-                    b.Navigation("InvestmentHistory")
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("money_management_service.Entities.TransactionType", b =>
