@@ -1,15 +1,19 @@
-﻿namespace money_management_service.Respository.Interfaces
+﻿using money_management_service.Core;
+
+namespace money_management_service.Respository.Interfaces
 {
-    public interface IBaseRepository<T>
+    public interface IBaseRepository<TEntity, TKey> where TEntity : BaseEntity<TKey>
     {
-        public Task<List<T>> GetAll();
+        Task<List<TEntity>> GetAllAsync();
 
-        public Task<T> GetById(int id);
+        Task<TEntity> GetAsync(TKey id);
 
-        public Task<T> Create();
+        Task<bool> CreateAsync(TEntity entity);
 
-        public Task<T> Update();
+        Task<bool> UpdateAsync(TEntity entity);
 
-        public Task<bool> Delete();
+        Task<bool> DeleteAsync(TKey id);
     }
+
+    public interface IBaseRepository<TEntity> : IBaseRepository<TEntity, int> where TEntity : BaseEntity { }
 }
