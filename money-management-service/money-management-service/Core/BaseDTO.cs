@@ -10,4 +10,6 @@ namespace money_management_service.Core
 
         public Status Status { get; set; }
     }
+
+    public class BaseDTO : BaseDTO<int> { }
 }
