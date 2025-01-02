@@ -1,6 +1,10 @@
 
 using Microsoft.EntityFrameworkCore;
 using money_management_service.Data;
+using money_management_service.Respository;
+using money_management_service.Respository.Interfaces;
+using money_management_service.Services;
+using money_management_service.Services.Interfaces;
 
 namespace money_management_service
 {
@@ -20,6 +24,12 @@ namespace money_management_service
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+
+
+            builder.Services.AddAutoMapper(typeof(Program).Assembly);
+
+            builder.Services.AddScoped<IExpenseTypeRepository, ExpenseTypeRepository>();
+            builder.Services.AddScoped<IExpenseTypeService, ExpenseTypeService>();
 
             var app = builder.Build();
 

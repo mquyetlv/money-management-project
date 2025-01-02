@@ -56,7 +56,7 @@ namespace money_management_service.Respository
 
     public class BaseRepository<TEntity> : BaseRepository<TEntity, int> where TEntity : BaseEntity
     {
-        public BaseRepository(MoneyManagementDbcontext dbcontext) : base(dbcontext)
+        public BaseRepository(MoneyManagementDBContext dbcontext) : base(dbcontext)
         {
         }
     }
