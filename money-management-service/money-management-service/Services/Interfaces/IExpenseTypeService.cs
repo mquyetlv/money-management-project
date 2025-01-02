@@ -2,12 +2,8 @@
 
 namespace money_management_service.Services.Interfaces
 {
-    public interface IExpenseTypeService
+    public interface IExpenseTypeService : IBaseService<ExpenseTypeDTO>
     {
         Task<List<ExpenseTypeDTO>> GetAll();
-        Task<ExpenseTypeDTO> GetById(int id);
-        Task<ExpenseTypeDTO> Create(ExpenseTypeDTO expenseTypeDTO);
-        Task<ExpenseTypeDTO> Update(int id, ExpenseTypeDTO entity);
-        Task Delete(int id);
     }
 }

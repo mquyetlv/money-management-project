@@ -1,4 +1,4 @@
-﻿using money_management_service.Data;
+﻿using AutoMapper;
 using money_management_service.DTOs.ExpenseType;
 using money_management_service.Respository.Interfaces;
 using money_management_service.Services.Interfaces;
@@ -7,18 +7,18 @@ namespace money_management_service.Services
 {
     public class ExpenseTypeService : IExpenseTypeService
     {
-        private readonly MoneyManagementDBContext _dbContext;
         private readonly IExpenseTypeRepository _repository;
+        private readonly IMapper _mapper;
 
-        public ExpenseTypeService(MoneyManagementDBContext dbContext, IExpenseTypeRepository repository)
+        public ExpenseTypeService(IMapper mapper, IExpenseTypeRepository repository)
         {
-            _dbContext = dbContext;
             _repository = repository;
+            _mapper = mapper;
         }
 
-        public Task<ExpenseTypeDTO> Create(ExpenseTypeDTO expenseTypeDTO)
+        public async Task<ExpenseTypeDTO> Create(ExpenseTypeDTO expenseTypeDTO)
         {
-            throw new NotImplementedException();
+            return await _repository.CreateAsync(expenseTypeDTO);
         }
 
         public Task Delete(int id)

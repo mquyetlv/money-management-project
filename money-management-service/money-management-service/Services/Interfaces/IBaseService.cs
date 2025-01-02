@@ -3,7 +3,6 @@
 
     public interface IBaseService<TDto, TKey>
     {
-        Task<List<TDto>> GetAll();
         Task<TDto> GetById(TKey id);
         Task<TDto> Create(TDto entity);
         Task<TDto> Update(TKey id, TDto entity);

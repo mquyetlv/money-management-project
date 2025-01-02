@@ -4,8 +4,6 @@ namespace money_management_service.Respository.Interfaces
 {
     public interface IBaseRepository<TEntity, TKey> where TEntity : BaseEntity<TKey>
     {
-        Task<List<TEntity>> GetAllAsync();
-
         Task<TEntity> GetAsync(TKey id);
 
         Task<bool> CreateAsync(TEntity entity);

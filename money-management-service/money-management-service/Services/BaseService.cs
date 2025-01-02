@@ -28,12 +28,6 @@ namespace money_management_service.Services
             await _repo.DeleteAsync(id);
         }
 
-        public async Task<List<TDto>> GetAll()
-        {
-            List<TEntity> entities = await _repo.GetAllAsync();
-            return _mapper.Map<List<TDto>>(entities);
-        }
-
         public async Task<TDto> GetById(TKey id)
         {
             TEntity entity = await _repo.GetAsync(id);
