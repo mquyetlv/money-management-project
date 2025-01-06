@@ -17,6 +17,11 @@ namespace money_management_service.Respository
             _dbSet = _dbcontext.Set<TEntity>();
         }
 
+        public async Task<List<TEntity>> GetAllAsync(BaseSearchCondition searchCondition)
+        {
+            return await _dbSet.Skip(searchCondition.Page * searchCondition.Size).Take(searchCondition.Size).ToListAsync();
+        }
+
         public async Task<bool> CreateAsync(TEntity entity)
         {
             _dbcontext.Add(entity);
@@ -28,12 +33,6 @@ namespace money_management_service.Respository
             TEntity entity = await _dbSet.FindAsync(id);
             _dbSet.Remove(entity);
             return await SaveChange();
-        }
-
-        public virtual async Task<List<TEntity>> GetAllAsync()
-        {
-            List<TEntity> entities = await _dbSet.ToListAsync();
-            return entities;
         }
 
         public virtual async Task<TEntity> GetAsync(TKey id)

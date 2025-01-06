@@ -4,6 +4,5 @@ namespace money_management_service.Respository.Interfaces
 {
     public interface IExpenseTypeRepository : IBaseRepository<ExpenseType>
     {
-        Task<List<ExpenseType>> GetAllAsync();
     }
 }
