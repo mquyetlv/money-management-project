@@ -16,6 +16,12 @@ namespace money_management_service.Services
             _mapper = mapper;
         }
 
+        public async Task<List<TDto>> GetAllAsync(BaseSearchCondition searchCondition)
+        {
+            List<TEntity> entities = await _repo.GetAllAsync(searchCondition);
+            return _mapper.Map<List<TDto>>(entities);
+        }
+
         public async Task<TDto> Create(TDto dto)
         {
             TEntity entity = _mapper.Map<TEntity>(dto);
