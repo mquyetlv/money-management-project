@@ -1,6 +1,8 @@
-﻿namespace money_management_service.DTOs.ExpenseType
+﻿using money_management_service.Core;
+
+namespace money_management_service.DTOs.ExpenseType
 {
-    public class SearchExpenseTypeDTO
+    public class SearchExpenseTypeDTO : BaseSearchCondition
     {
         public string Name { get; set; }
 

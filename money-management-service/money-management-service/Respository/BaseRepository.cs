@@ -2,6 +2,7 @@
 using money_management_service.Core;
 using money_management_service.Data;
 using money_management_service.Respository.Interfaces;
+using System.Linq.Expressions;
 
 namespace money_management_service.Respository
 {
@@ -17,9 +18,10 @@ namespace money_management_service.Respository
             _dbSet = _dbcontext.Set<TEntity>();
         }
 
-        public async Task<List<TEntity>> GetAllAsync(BaseSearchCondition searchCondition)
+        public async Task<List<TEntity>> GetAllAsync(QueryModel<TEntity> queryModel)
         {
-            return await _dbSet.Skip(searchCondition.Page * searchCondition.Size).Take(searchCondition.Size).ToListAsync();
+            IQueryable<TEntity> query = GetQueryable(queryModel);
+            return await query.ToListAsync();
         }
 
         public async Task<bool> CreateAsync(TEntity entity)
@@ -50,6 +52,39 @@ namespace money_management_service.Respository
         private async Task<bool> SaveChange()
         {
             return await _dbcontext.SaveChangesAsync() > 0;
+        }
+
+        private IQueryable<TEntity> GetQueryable(QueryModel<TEntity> queryModel)
+        {
+            IQueryable<TEntity> query = _dbSet;
+
+            if (queryModel == null)
+                return query;
+
+            if (!queryModel.Tracking)
+            {
+                query = query.AsNoTracking();
+            }
+
+            foreach (Expression<Func<TEntity, object>> includeProp in queryModel.Includes)
+            {
+                query = query.Include(includeProp);
+            }
+
+            foreach (Expression<Func<TEntity, bool>> filterCondition in queryModel.Filters)
+            {
+                query = query.Where(filterCondition);
+            }
+
+            if (queryModel.OrderBy != null)
+            {
+                query = queryModel.OrderBy(query);
+            }
+
+            query.Skip(queryModel.Page * queryModel.Size)
+                 .Take(queryModel.Size);
+
+            return query;
         }
     }
 

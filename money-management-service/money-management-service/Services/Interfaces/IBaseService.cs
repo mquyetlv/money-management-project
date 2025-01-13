@@ -3,14 +3,14 @@
 namespace money_management_service.Services.Interfaces
 {
 
-    public interface IBaseService<TDto, TKey>
+    public interface IBaseService<TEntity, TDto, TKey>
     {
-        Task<TDto> GetAllAsync(BaseSearchCondition searchCondition);
+        Task<List<TDto>> GetAllAsync(QueryModel<TEntity> queryModel);
         Task<TDto> GetById(TKey id);
         Task<TDto> Create(TDto entity);
         Task<TDto> Update(TKey id, TDto entity);
         Task Delete(TKey id);
     }
 
-    public interface IBaseService<TDto> : IBaseService<TDto, int> { }
+    public interface IBaseService<TEntity, TDto> : IBaseService<TEntity, TDto, int> { }
 }

@@ -4,6 +4,5 @@ namespace money_management_service.Services.Interfaces
 {
     public interface IExpenseTypeService : IBaseService<ExpenseTypeDTO>
     {
-        Task<List<ExpenseTypeDTO>> GetAll();
     }
 }

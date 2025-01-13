@@ -5,7 +5,7 @@ using money_management_service.Services.Interfaces;
 
 namespace money_management_service.Services
 {
-    public class BaseService<TEntity, TDto, TKey> : IBaseService<TDto, TKey> where TEntity : BaseEntity<TKey> where TDto : BaseDTO<TKey>
+    public class BaseService<TEntity, TDto, TKey> : IBaseService<TEntity, TDto, TKey> where TEntity : BaseEntity<TKey> where TDto : BaseDTO<TKey>
     {
         private readonly IBaseRepository<TEntity, TKey> _repo;
         private readonly IMapper _mapper;
@@ -16,9 +16,9 @@ namespace money_management_service.Services
             _mapper = mapper;
         }
 
-        public async Task<List<TDto>> GetAllAsync(BaseSearchCondition searchCondition)
+        public async Task<List<TDto>> GetAllAsync(QueryModel<TEntity> queryModel)
         {
-            List<TEntity> entities = await _repo.GetAllAsync(searchCondition);
+            List<TEntity> entities = await _repo.GetAllAsync(queryModel);
             return _mapper.Map<List<TDto>>(entities);
         }
 
