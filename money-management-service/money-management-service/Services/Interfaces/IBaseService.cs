@@ -5,7 +5,7 @@ namespace money_management_service.Services.Interfaces
 
     public interface IBaseService<TEntity, TDto, TKey>
     {
-        Task<List<TDto>> GetAllAsync(QueryModel<TEntity> queryModel);
+        Task<APIResponse<List<TDto>>> GetAllAsync(QueryModel<TEntity> queryModel);
         Task<TDto> GetById(TKey id);
         Task<TDto> Create(TDto entity);
         Task<TDto> Update(TKey id, TDto entity);

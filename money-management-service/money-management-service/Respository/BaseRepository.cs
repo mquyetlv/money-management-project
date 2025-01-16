@@ -3,6 +3,7 @@ using money_management_service.Core;
 using money_management_service.Data;
 using money_management_service.Respository.Interfaces;
 using System.Linq.Expressions;
+using System.Net;
 
 namespace money_management_service.Respository
 {
@@ -18,10 +19,20 @@ namespace money_management_service.Respository
             _dbSet = _dbcontext.Set<TEntity>();
         }
 
-        public async Task<List<TEntity>> GetAllAsync(QueryModel<TEntity> queryModel)
+        public async Task<APIResponse<List<TEntity>>> GetAllAsync(QueryModel<TEntity> queryModel)
         {
-            IQueryable<TEntity> query = GetQueryable(queryModel);
-            return await query.ToListAsync();
+            try
+            {
+                IQueryable<TEntity> query = GetQueryable(queryModel);
+                List<TEntity> entities = await query.ToListAsync();
+                int total = await _dbSet.CountAsync();
+                Pagination pagination = new Pagination(total, queryModel.Page, queryModel.Size);
+                return new APIResponse<List<TEntity>>(entities, pagination);
+            }
+            catch (Exception ex) 
+            {
+                return new APIResponse<List<TEntity>>(HttpStatusCode.InternalServerError, ex.Message);
+            }
         }
 
         public async Task<bool> CreateAsync(TEntity entity)

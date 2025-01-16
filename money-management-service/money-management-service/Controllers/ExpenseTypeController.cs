@@ -14,12 +14,6 @@ namespace money_management_service.Controllers
         {
             _expenseTypeService = expenseTypeService;
         }
-
-        [HttpGet]
-        public async Task<IActionResult> GetAll(SearchExpenseTypeDTO searchCondition) 
-        {
-            const queryModel = new QueryModel
-        }
     }
 }
  

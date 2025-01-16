@@ -4,7 +4,7 @@ namespace money_management_service.Respository.Interfaces
 {
     public interface IBaseRepository<TEntity, TKey> where TEntity : BaseEntity<TKey>
     {
-        Task<List<TEntity>> GetAllAsync(BaseSearchCondition searchCondition);
+        Task<APIResponse<List<TEntity>>> GetAllAsync(QueryModel<TEntity> queryModel);
 
         Task<TEntity> GetAsync(TKey id);
 

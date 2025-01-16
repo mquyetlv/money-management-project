@@ -16,10 +16,10 @@ namespace money_management_service.Services
             _mapper = mapper;
         }
 
-        public async Task<List<TDto>> GetAllAsync(QueryModel<TEntity> queryModel)
+        public async Task<APIResponse<List<TDto>>> GetAllAsync(QueryModel<TEntity> queryModel)
         {
-            List<TEntity> entities = await _repo.GetAllAsync(queryModel);
-            return _mapper.Map<List<TDto>>(entities);
+            APIResponse<List<TEntity>> entities = await _repo.GetAllAsync(queryModel);
+            return _mapper.Map<APIResponse<List<TDto>>>(entities);
         }
 
         public async Task<TDto> Create(TDto dto)

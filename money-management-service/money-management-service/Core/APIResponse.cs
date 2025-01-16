@@ -16,7 +16,7 @@ namespace money_management_service.Core
 
         public Pagination Pagination { get; set; }
 
-        public APIResponse(T data, string message = "", HttpStatusCode statusCode = HttpStatusCode.OK, Pagination pagination = null)
+        public APIResponse(T data, Pagination pagination = null, string message = "Success", HttpStatusCode statusCode = HttpStatusCode.OK)
         {
             Success = true;
             Data = data;
