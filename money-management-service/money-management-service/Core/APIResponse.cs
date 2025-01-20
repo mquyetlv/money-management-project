@@ -14,7 +14,7 @@ namespace money_management_service.Core
 
         public object Error { get; set; }
 
-        public Pagination Pagination { get; set; }
+        public Pagination? Pagination { get; set; }
 
         public APIResponse(T data, Pagination pagination = null, string message = "Success", HttpStatusCode statusCode = HttpStatusCode.OK)
         {
@@ -23,7 +23,7 @@ namespace money_management_service.Core
             Message = message;
             StatusCode = statusCode;
             Error = null;
-            Pagination = pagination ?? new Pagination();
+            Pagination = pagination;
         }
 
         public APIResponse(HttpStatusCode statusCode, string message, object error = null) 

@@ -10,6 +10,6 @@ namespace money_management_service.Services.Interfaces
         Task<APIResponse<ExpenseTypeDTO>> GetById(int id);
         Task<APIResponse<ExpenseTypeDTO>> Create(CreateExpenseTypeDTO entity);
         Task<APIResponse<ExpenseTypeDTO>> Update(int id, ExpenseTypeDTO entity);
-        Task<APIResponse<ExpenseTypeDTO>> Delete(int id);
+        Task<APIResponse<string>> Delete(int id);
     }
 }
