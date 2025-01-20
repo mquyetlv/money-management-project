@@ -7,9 +7,7 @@ using System.Linq.Expressions;
 
 namespace money_management_service.Controllers
 {
-    [ApiController]
-    [Route("api/[controller]")]
-    public class ExpenseTypeController : ControllerBase
+    public class ExpenseTypeController : BaseController
     {
         private readonly IExpenseTypeService _expenseTypeService;
 
@@ -35,9 +33,10 @@ namespace money_management_service.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateExpensiveType([FromBody] ExpenseTypeDTO expenseType)
+        public async Task<IActionResult> CreateExpensiveType([FromBody] CreateExpenseTypeDTO expenseType)
         {
-            return Ok(_expenseTypeService.Create(expenseType));
+            var data = await _expenseTypeService.Create(expenseType);
+            return Ok(data);
         }
     }
 }

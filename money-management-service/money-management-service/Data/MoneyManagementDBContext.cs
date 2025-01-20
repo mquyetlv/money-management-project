@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using money_management_service.Core;
+using money_management_service.Core.Enums;
 using money_management_service.Entities;
 
 namespace money_management_service.Data
@@ -40,7 +41,7 @@ namespace money_management_service.Data
                 {
                     entity.CreatedDate = DateTime.Now;
                     entity.CreatedBy = "ADMIN";
-                    Console.WriteLine("Created by admin");
+                    entity.Status = Status.ACTIVE;
                 }
 
                 entity.UpdatedDate = DateTime.Now;

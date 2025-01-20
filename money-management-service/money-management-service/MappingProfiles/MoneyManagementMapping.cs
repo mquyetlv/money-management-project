@@ -13,10 +13,6 @@ namespace money_management_service.MappingProfiles
             CreateMap<ExpenseType, ExpenseTypeDTO>()
                 .ForMember(dest => dest.StatusName, act => act.MapFrom(src => src.Status.GetDescription()))
                 .ReverseMap();
-
-            CreateMap<APIResponse<List<ExpenseType>>, APIResponse<List<ExpenseTypeDTO>>>()
-                .ForMember(dest => dest.Data, opt => opt.MapFrom(src => src.Data))
-                .ReverseMap();
         }
     }
 }

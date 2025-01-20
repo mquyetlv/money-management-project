@@ -1,5 +1,4 @@
 ﻿using money_management_service.Data;
-using money_management_service.DTOs.ExpenseType;
 using money_management_service.Entities;
 using money_management_service.Respository.Interfaces;
 
