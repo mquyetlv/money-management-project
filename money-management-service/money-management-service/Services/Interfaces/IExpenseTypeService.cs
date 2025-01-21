@@ -9,7 +9,7 @@ namespace money_management_service.Services.Interfaces
         Task<APIResponse<List<ExpenseTypeDTO>>> GetAllAsync(QueryModel<ExpenseType> queryModel);
         Task<APIResponse<ExpenseTypeDTO>> GetById(int id);
         Task<APIResponse<ExpenseTypeDTO>> Create(CreateExpenseTypeDTO entity);
-        Task<APIResponse<ExpenseTypeDTO>> Update(int id, ExpenseTypeDTO entity);
-        Task<APIResponse<string>> Delete(int id);
+        Task<APIResponse<ExpenseTypeDTO>> Update(int id, CreateExpenseTypeDTO entity);
+        Task<bool> Delete(int id);
     }
 }

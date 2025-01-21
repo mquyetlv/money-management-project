@@ -3,7 +3,6 @@ using money_management_service.Core;
 using money_management_service.Data;
 using money_management_service.Respository.Interfaces;
 using System.Linq.Expressions;
-using System.Net;
 
 namespace money_management_service.Respository
 {
@@ -21,18 +20,11 @@ namespace money_management_service.Respository
 
         public async Task<APIResponse<List<TEntity>>> GetAllAsync(QueryModel<TEntity> queryModel)
         {
-            try
-            {
-                IQueryable<TEntity> query = GetQueryable(queryModel);
-                List<TEntity> entities = await query.ToListAsync();
-                int total = await _dbSet.CountAsync();
-                Pagination pagination = new Pagination(total, queryModel.Page, queryModel.Size);
-                return new APIResponse<List<TEntity>>(entities, pagination);
-            }
-            catch (Exception ex) 
-            {
-                return new APIResponse<List<TEntity>>(HttpStatusCode.InternalServerError, ex.Message);
-            }
+            IQueryable<TEntity> query = GetQueryable(queryModel);
+            List<TEntity> entities = await query.ToListAsync();
+            int total = await _dbSet.CountAsync();
+            Pagination pagination = new Pagination(total, queryModel.Page, queryModel.Size);
+            return new APIResponse<List<TEntity>>(entities, pagination);
         }
 
         public async Task<bool> CreateAsync(TEntity entity)
@@ -44,6 +36,11 @@ namespace money_management_service.Respository
         public async Task<bool> DeleteAsync(TKey id)
         {
             TEntity entity = await _dbSet.FindAsync(id);
+            if (entity == null) 
+            { 
+                return false;
+            }
+
             _dbSet.Remove(entity);
             return await SaveChange();
         }
@@ -92,9 +89,7 @@ namespace money_management_service.Respository
                 query = queryModel.OrderBy(query);
             }
 
-            query.Skip(queryModel.Page * queryModel.Size)
-                 .Take(queryModel.Size);
-
+            query = query.Skip(queryModel.Page * queryModel.Size).Take(queryModel.Size);
             return query;
         }
     }

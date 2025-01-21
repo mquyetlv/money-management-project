@@ -8,6 +8,6 @@ namespace money_management_service.DTOs.ExpenseType
 
         public string? Description { get; set; }
 
-        public bool IsBalanceChanged { get; set; }
+        public bool? IsBalanceChanged { get; set; }
     }
 }
