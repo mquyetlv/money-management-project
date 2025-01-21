@@ -31,6 +31,9 @@ namespace money_management_service
             builder.Services.AddScoped<IExpenseTypeRepository, ExpenseTypeRepository>();
             builder.Services.AddScoped<IExpenseTypeService, ExpenseTypeService>();
 
+            builder.Services.AddScoped<IMoneyStorageRepository, MoneyStorageRepository>();
+            builder.Services.AddScoped<IMoneyStorageService, MoneyStorageService>();
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
