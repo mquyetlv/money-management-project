@@ -1,35 +1,72 @@
-﻿using money_management_service.Core;
+﻿using AutoMapper;
+using money_management_service.Core;
 using money_management_service.DTOs.MoneyStorage;
 using money_management_service.Entities;
+using money_management_service.Respository.Interfaces;
 using money_management_service.Services.Interfaces;
 
 namespace money_management_service.Services
 {
     public class MoneyStorageService : IMoneyStorageService
     {
-        public Task<APIResponse<MoneyStorageDTO>> Create(CreateMoneyStorageDTO entity)
+        private readonly IMapper _mapper;
+        private readonly IMoneyStorageRepository _repository;
+        public MoneyStorageService(IMapper mapper, IMoneyStorageRepository repository) 
         {
-            throw new NotImplementedException();
+            _mapper = mapper;
+            _repository = repository;
+        }
+
+        public async Task<APIResponse<MoneyStorageDTO>> Create(CreateMoneyStorageDTO entity)
+        {
+            MoneyStorage moneyStorage = new MoneyStorage()
+            {
+                Name = entity.Name,
+                Balance = entity.Balance,
+                CardNumber = entity.CardNumber,
+                OwnerName = entity.OwnerName,
+                CardType = entity.CardType,
+            };
+
+            var result = await _repository.CreateAsync(moneyStorage);
+            MoneyStorageDTO moneyStoreageDto = _mapper.Map<MoneyStorageDTO>(moneyStorage);
+            return new APIResponse<MoneyStorageDTO>(moneyStoreageDto);
         }
 
         public Task<bool> Delete(int id)
         {
-            throw new NotImplementedException();
+            return _repository.DeleteAsync(id);
         }
 
-        public Task<APIResponse<List<MoneyStorageDTO>>> GetAllAsync(QueryModel<MoneyStorage> queryModel)
+        public async Task<APIResponse<List<MoneyStorageDTO>>> GetAllAsync(QueryModel<MoneyStorage> queryModel)
         {
-            throw new NotImplementedException();
+            APIResponse<List<MoneyStorage>> data = await _repository.GetAllAsync(queryModel);
+            return new APIResponse<List<MoneyStorageDTO>>(_mapper.Map<List<MoneyStorageDTO>>(data.Data), data.Pagination);
         }
 
-        public Task<APIResponse<MoneyStorageDTO>> GetById(int id)
+        public async Task<APIResponse<MoneyStorageDTO>> GetById(int id)
         {
-            throw new NotImplementedException();
+            MoneyStorage moneyStorage = await _repository.GetAsync(id);
+            MoneyStorageDTO moneyStorageDTO = _mapper.Map<MoneyStorageDTO>(moneyStorage);
+            return new APIResponse<MoneyStorageDTO>(moneyStorageDTO);
         }
 
-        public Task<APIResponse<MoneyStorageDTO>> Update(int id, CreateMoneyStorageDTO entity)
+        public async Task<APIResponse<MoneyStorageDTO>> Update(int id, CreateMoneyStorageDTO entity)
         {
-            throw new NotImplementedException();
+            MoneyStorage moneyStorage = await _repository.GetAsync(id);
+            if (moneyStorage != null) 
+            {
+                moneyStorage.Name = entity.Name;
+                moneyStorage.Balance = entity.Balance;
+                moneyStorage.CardNumber = entity.CardNumber;
+                moneyStorage.CardType = entity.CardType;
+                moneyStorage.OwnerName = entity.OwnerName;
+
+                await _repository.UpdateAsync(moneyStorage);
+                MoneyStorageDTO moneyStorageDTO = _mapper.Map<MoneyStorageDTO>(moneyStorage);
+                return new APIResponse<MoneyStorageDTO>(moneyStorageDTO);
+            }
+            return null;   
         }
     }
 }
