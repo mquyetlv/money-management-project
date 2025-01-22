@@ -19,7 +19,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="DTOs\MoneyStorage\" />
     <Folder Include="DTOs\Transaction\" />
     <Folder Include="DTOs\TransactionType\" />
   </ItemGroup>
