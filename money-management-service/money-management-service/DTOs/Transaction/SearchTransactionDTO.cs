@@ -2,8 +2,14 @@
 {
     public class SearchTransactionDTO
     {
-        public string Name { get; set; }
+        public string? Name { get; set; }
 
-        public string Description { get; set; }
+        public string? Description { get; set; }
+
+        public int? Amount { get; set; }
+
+        public int? TransactionTypeId { get; set; }
+
+        public int? MoneyStorageId { get; set; }
     }
 }

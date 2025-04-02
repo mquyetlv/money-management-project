@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using money_management_service.DTOs.ExpenseType;
 using money_management_service.DTOs.MoneyStorage;
+using money_management_service.DTOs.Transaction;
 using money_management_service.DTOs.TransactionType;
 using money_management_service.Entities;
 using money_management_service.Extentions;
@@ -23,6 +24,12 @@ namespace money_management_service.MappingProfiles
             CreateMap<TransactionType, TransactionTypeDTO>()
                 .ForMember(dest => dest.StatusName, act => act.MapFrom(src => src.Status.GetDescription()))
                 .ForMember(dest => dest.ExpenseTypeName, act => act.MapFrom(src => src.ExpenseType.Name))
+                .ReverseMap();
+
+            CreateMap<Transaction, TransactionDTO>()
+                .ForMember(dest => dest.StatusName, act => act.MapFrom(src => src.Status.GetDescription()))
+                .ForMember(dest => dest.TransactionTypeName, act => act.MapFrom(src => src.TransactionType.Name))
+                .ForMember(dest => dest.MoneyStorageName, act => act.MapFrom(src => src.MoneyStorage.Name))
                 .ReverseMap();
         }
     }
